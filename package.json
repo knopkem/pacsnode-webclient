@@ -1,0 +1,31 @@
+{
+  "name": "pacsnode-webclient",
+  "version": "1.0.0",
+  "description": "DICOM WebViewer (vanilla js)",
+  "main": "index.js",
+  "scripts": {
+    "start": "grunt build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knopkem/pacsnode-webclient.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knopkem/pacsnode-webclient/issues"
+  },
+  "homepage": "https://github.com/knopkem/pacsnode-webclient#readme",
+  "devDependencies": {
+    "grunt": "^1.1.0",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^2.1.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-jsbeautifier": "^0.2.13",
+    "load-grunt-tasks": "^5.1.0"
+  }
+}

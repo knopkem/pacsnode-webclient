@@ -24,8 +24,8 @@ pnw.DicomLoader.prototype.load = function (filename, timeout, quality) {
         this.lastDeferred.reject();
     }
 
-    this.lastTimeout = window.setTimeout(function () {
-        that.loadHeader(filename, quality).then(function (dicomObject) {
+    this.lastTimeout = window.setTimeout(() => {
+        that.loadHeader(filename, quality).then(dicomObject => {
             dfd.resolve(dicomObject);
         });
     }, timeout);
@@ -43,14 +43,14 @@ pnw.DicomLoader.prototype.loadHeader = function (filename, quality) {
         dfd = Q.defer();
 
     http_request.open("GET", modFilename, true);
-    http_request.onreadystatechange = function () {
+    http_request.onreadystatechange = () => {
         var dicomHeader = null;
         if (http_request.readyState === 4) {
 
             if (http_request.status === 204) {
                 log.debug('received progressing message');
-                window.setTimeout(function () {
-                    that.loadHeader(filename, quality).then(function (dicomObject) {
+                window.setTimeout(() => {
+                    that.loadHeader(filename, quality).then(dicomObject => {
                         dfd.resolve(dicomObject);
                     });
                 }, 500);
@@ -61,7 +61,7 @@ pnw.DicomLoader.prototype.loadHeader = function (filename, quality) {
                 dicomHeader = new pnw.DicomHeader(JSON.parse(http_request.responseText));
 
                 // load buffer
-                that.loadDicomData(dicomHeader, filename, quality).then(function (patientData) {
+                that.loadDicomData(dicomHeader, filename, quality).then(patientData => {
                     dfd.resolve(patientData);
                 });
             }
@@ -85,7 +85,7 @@ pnw.DicomLoader.prototype.loadDicomData = function (dicomHeader, filename, quali
         [that.loadImage(dicomHeader, filename, quality, 'a'),
             that.loadImage(dicomHeader, filename, quality, 'b')
         ]
-    ).spread(function (dataA, dataB) {
+    ).spread((dataA, dataB) => {
         log.debug('load dicom data done');
 
         // now create buffer using a webworker
@@ -96,7 +96,7 @@ pnw.DicomLoader.prototype.loadDicomData = function (dicomHeader, filename, quali
 };
 
 // returns local promise with the image data (async)
-pnw.DicomLoader.prototype.loadImage = function (dicomHeader, filename, quality, type) {
+pnw.DicomLoader.prototype.loadImage = (dicomHeader, filename, quality, type) => {
     "use strict";
     var image = new Image(),
         modFilename = "/full" + filename + '&type=' + type + '&quality=' + quality,
@@ -104,7 +104,7 @@ pnw.DicomLoader.prototype.loadImage = function (dicomHeader, filename, quality, 
         dataout = null;
 
     log.debug('retrieving data', type);
-    image.onload = function () {
+    image.onload = () => {
         var imgcanvas = document.createElement('canvas'),
             imgctx = imgcanvas.getContext("2d"),
             w = dicomHeader.cols(),
@@ -123,7 +123,7 @@ pnw.DicomLoader.prototype.loadImage = function (dicomHeader, filename, quality, 
 };
 
 // creates dicom object (sync)
-pnw.DicomLoader.prototype.createBuffer = function (dicomHeader, dataina, datainb, quality) {
+pnw.DicomLoader.prototype.createBuffer = (dicomHeader, dataina, datainb, quality) => {
     "use strict";
 
     // check if all conditions are set

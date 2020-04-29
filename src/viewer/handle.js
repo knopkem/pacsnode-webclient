@@ -71,7 +71,7 @@ pnw.Handle.prototype.draw = function (context, offset, zoom) {
 
     //! fallback if not supported
     if (!context.setLineDash) {
-        context.setLineDash = function () {};
+        context.setLineDash = () => {};
     }
 
 

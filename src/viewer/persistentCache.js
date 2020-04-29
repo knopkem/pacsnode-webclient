@@ -28,18 +28,18 @@ pnw.PersistentCache.prototype.init = function () {
         dfd = Q.defer();
 
 
-    request.onsuccess = function (evt) {
+    request.onsuccess = evt => {
         log.debug('success');
         that.db = request.result;
         dfd.resolve();
     };
 
-    request.onerror = function (evt) {
+    request.onerror = evt => {
         log.error("IndexedDB error: " + evt.target.errorCode);
         dfd.reject();
     };
 
-    request.onupgradeneeded = function (evt) {
+    request.onupgradeneeded = evt => {
         log.debug('onupgradeneeded');
         var objectStore = evt.target.result.createObjectStore(that.storeName, {
             keyPath: "id",
@@ -65,7 +65,7 @@ pnw.PersistentCache.prototype.add = function (path, buffer) {
     var dfd = Q.defer(),
         that = this;
 
-    this.init().then(function () {
+    this.init().then(() => {
 
         var transaction = that.db.transaction(that.storeName, "readwrite"),
             objectStore = transaction.objectStore(that.storeName),
@@ -74,17 +74,17 @@ pnw.PersistentCache.prototype.add = function (path, buffer) {
                 buffer: buffer
             });
 
-        request.onsuccess = function (evt) {
+        request.onsuccess = evt => {
             // do something when the add succeeded
             log.debug('added data for', path);
             dfd.resolve();
         };
 
-        request.onerror = function (evt) {
+        request.onerror = evt => {
             log.warn('failed to add data to ', path);
             dfd.reject();
         };
-    }, function () {
+    }, () => {
         log.warn('failed to initialize');
         dfd.reject();
     });
@@ -100,14 +100,14 @@ pnw.PersistentCache.prototype.get = function (ident) {
     var dfd = Q.defer(),
         that = this;
 
-    this.init().then(function () {
+    this.init().then(() => {
 
         var transaction = that.db.transaction(that.storeName),
             objectStore = transaction.objectStore(that.storeName),
             index = objectStore.index("path"),
             request = index.get(ident);
 
-        request.onsuccess = function (evt) {
+        request.onsuccess = evt => {
             if (typeof request.result === 'undefined') {
                 log.debug('nothing stored, cannot get data', ident);
                 dfd.reject();
@@ -119,12 +119,12 @@ pnw.PersistentCache.prototype.get = function (ident) {
             }
         };
 
-        request.onerror = function (evt) {
+        request.onerror = evt => {
             log.warn('failed to get data: ', ident);
             dfd.reject();
         };
 
-    }, function () {
+    }, () => {
         log.warn('failed to initialize');
         dfd.reject();
     });
@@ -139,22 +139,22 @@ pnw.PersistentCache.prototype.remove = function (ident) {
     var dfd = Q.defer(),
         that = this;
 
-    this.init().then(function () {
+    this.init().then(() => {
 
         var transaction = that.db.transaction(that.storeName),
             objectStore = transaction.objectStore(that.storeName),
             request = objectStore.delete(ident);
 
-        request.onsuccess = function (evt) {
+        request.onsuccess = evt => {
             log.debug("deleted: " + ident);
             dfd.resolve();
         };
 
-        request.onerror = function (evt) {
+        request.onerror = evt => {
             log.warn('failed to remove data: ', ident);
             dfd.reject();
         };
-    }, function () {
+    }, () => {
         log.warn('failed to initialize');
         dfd.reject();
     });
@@ -169,14 +169,14 @@ pnw.PersistentCache.prototype.contains = function (ident) {
     var dfd = Q.defer(),
         that = this;
 
-    this.init().then(function () {
+    this.init().then(() => {
 
         var transaction = that.db.transaction(that.storeName),
             objectStore = transaction.objectStore(that.storeName),
             index = objectStore.index("path"),
             request = index.openCursor(ident);
 
-        request.onsuccess = function (evt) {
+        request.onsuccess = evt => {
             var cursor = request.result || evt.result;
             if (cursor) { // key already exist
                 log.debug('key exists', ident);
@@ -187,11 +187,11 @@ pnw.PersistentCache.prototype.contains = function (ident) {
             }
         };
 
-        request.onerror = function (evt) {
+        request.onerror = evt => {
             log.warn('contains failed', ident);
             dfd.reject();
         };
-    }, function () {
+    }, () => {
         log.warn('failed to initialize');
         dfd.reject();
     });
@@ -206,22 +206,22 @@ pnw.PersistentCache.prototype.clear = function () {
     var dfd = Q.defer(),
         that = this;
 
-    this.init().then(function () {
+    this.init().then(() => {
 
         var transaction = that.db.transaction(that.storeName, "readwrite"),
             objectStore = transaction.objectStore(that.storeName),
             request = objectStore.clear();
 
-        request.onsuccess = function (evt) {
+        request.onsuccess = evt => {
             log.debug("clearing cache");
             dfd.resolve();
         };
 
-        request.onerror = function (evt) {
+        request.onerror = evt => {
             log.warn('failed to clear storage');
             dfd.reject();
         };
-    }, function () {
+    }, () => {
         log.warn('failed to initialize');
         dfd.reject();
     });

@@ -33,20 +33,20 @@ pnw.ViewMaster = function (viewer_id, overlay_id) {
 
 
     var that = this;
-    this.preloader = new pnw.Preloader(this.cache, function (percentage, remaining) {
+    this.preloader = new pnw.Preloader(this.cache, (percentage, remaining) => {
         that.drawPreloadingLabel(percentage, remaining);
     });
 
     // prepare handlers
     this.prepare();
 
-    window.pubsub.sub("sliceLoadStart", function (e) {
+    window.pubsub.sub("sliceLoadStart", e => {
         if (that.preloader.isRunning()) {
             that.preloader.stop();
         }
     });
 
-    window.pubsub.sub("sliceLoadStop", function (e) {
+    window.pubsub.sub("sliceLoadStop", e => {
         log.debug('slice loading finished', e);
         if (!that.preloader.isRunning()) {
             log.debug("slice loading finished, restarting preloader");
@@ -54,7 +54,7 @@ pnw.ViewMaster = function (viewer_id, overlay_id) {
                 window.clearTimeout(that.preloaderTimeout);
                 that.preloaderTimeout = 0;
             }
-            that.preloaderTimeout = setTimeout(function () {
+            that.preloaderTimeout = setTimeout(() => {
                 that.preloader.start(e);
             }, 500);
         }
@@ -85,7 +85,7 @@ pnw.ViewMaster.prototype.prepare = function () {
             drag_max_touches: 2
         });
 
-    hammertime.on("dragstart", function (ev) {
+    hammertime.on("dragstart", ev => {
 
         that.sliderPosTemp = that.currentSliderPos;
         that.lastPosY = ev.gesture.center.pageY;
@@ -93,7 +93,7 @@ pnw.ViewMaster.prototype.prepare = function () {
         that.viewer.onDragStart(ev);
     });
 
-    hammertime.on("drag", function (ev) {
+    hammertime.on("drag", ev => {
 
         // change of slice only when draging with 1 finger
         if ((ev.gesture.touches.length === 1) && (that.viewer.isHandlingEvents() === false) && (that.viewer.interactionMode === 0)) {
@@ -136,12 +136,12 @@ pnw.ViewMaster.prototype.prepare = function () {
         that.viewer.onDrag(ev);
     });
 
-    hammertime.on("dragend", function (ev) {
+    hammertime.on("dragend", ev => {
         that.viewer.onDragEnd(ev);
     });
 
     // mouseweel plugin
-    $(this.overlayCanvas).bind("mousewheel.TileViewerer", function (e, delta) {
+    $(this.overlayCanvas).bind("mousewheel.TileViewerer", (e, delta) => {
         that.viewer.onMouseWheelMove(e, delta);
     });
 
@@ -181,8 +181,8 @@ pnw.ViewMaster.prototype.init = function (base, studyUid, seriesUid) {
                 serUID: seriesUid
             }
         })
-        .then(function (response) {
-            $.each(response, function (i, val) {
+        .then(response => {
+            $.each(response, (i, val) => {
                 pData = val;
             });
             that.sopInstances = pData.LocalInstances.split("#");
@@ -240,7 +240,7 @@ pnw.ViewMaster.prototype.getViewer = function (modality) {
     return this.viewer;
 };
 
-pnw.ViewMaster.prototype.stringContains = function (input, substring) {
+pnw.ViewMaster.prototype.stringContains = (input, substring) => {
     "use strict";
     if (input.search(substring) !== -1) {
         return true;

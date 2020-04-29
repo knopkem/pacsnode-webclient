@@ -26,7 +26,10 @@ module.exports = function (grunt) {
 
         // check for lint issues
         jshint: {
-            files: ['Gruntfile.js', 'src/**/*.js']
+            files: ['Gruntfile.js', 'src/**/*.js'],
+            options: {
+                "esversion": 6
+            }
         },
 
         // create documentation

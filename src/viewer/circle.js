@@ -2,11 +2,11 @@ var pnw = pnw || {}; // global namespace
 
 /*global log*/
 
-pnw.Circle = function () {
+pnw.Circle = () => {
     "use strict";
 };
 
-pnw.Circle.prototype.draw = function (context, pt1, pt2, offset, zoom) {
+pnw.Circle.prototype.draw = (context, pt1, pt2, offset, zoom) => {
     "use strict";
 
     var w1 = pnw.MathHelper.image2World(pt1, offset, zoom),
@@ -27,7 +27,7 @@ pnw.Circle.prototype.draw = function (context, pt1, pt2, offset, zoom) {
     context.closePath();
 };
 
-pnw.Circle.prototype.computeRoi = function (dicomObject, pt1, pt2) {
+pnw.Circle.prototype.computeRoi = (dicomObject, pt1, pt2) => {
     'use strict';
 
     var hitObj = {
@@ -49,7 +49,7 @@ pnw.Circle.prototype.computeRoi = function (dicomObject, pt1, pt2) {
     return pnw.MathHelper.computeRoi(hitObj, dicomObject);
 };
 
-pnw.Circle.circleHitTest = function (center, radius, hitPt) {
+pnw.Circle.circleHitTest = (center, radius, hitPt) => {
     'use strict';
     var dx = hitPt.x - center.x,
         dy = hitPt.y - center.y;

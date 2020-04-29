@@ -4,7 +4,7 @@
 /**
  * Simple Publish/Subscribe implemenation of the observer pattern
  */
-window.pubsub = (function () {
+window.pubsub = (() => {
     "use strict";
     var eventToListeners = {},
         i;
@@ -28,4 +28,4 @@ window.pubsub = (function () {
             }
         }
     };
-}());
+})();

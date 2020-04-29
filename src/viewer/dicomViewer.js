@@ -94,7 +94,7 @@ pnw.DicomViewer.prototype.onCanvasResize = function (width, height) {
     this.viewerWidth = parseInt(width, 10);
     this.viewerHeight = parseInt(height, 10);
 
-    setTimeout(function () {
+    setTimeout(() => {
         // scale viewer canvas
         that.viewerCanvas.width = that.viewerWidth;
         that.viewerCanvas.height = that.viewerHeight;
@@ -468,10 +468,10 @@ pnw.DicomViewer.prototype.loadDicom = function (currentSOP) {
     }
 
     // check cache 
-    this.cacheMgr.get(currentSOP).then(function (dicomObject) {
+    this.cacheMgr.get(currentSOP).then(dicomObject => {
         log.debug('cache hit', currentSOP);
         loadData(dicomObject);
-    }, function () {
+    }, () => {
 
         window.pubsub.pub("sliceLoadStart", currentSOP);
 

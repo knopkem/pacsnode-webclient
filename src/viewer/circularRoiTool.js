@@ -53,7 +53,7 @@ pnw.CircularRoiTool.prototype.draw = function (dicomObject, context, offset, zoo
         // the calculation needs to be done delayed to not block the gui
         that.label.draw(context, this.handle2.imagePt, '', offset, zoom);
         window.clearTimeout(this.timeoutHandle);
-        this.timeoutHandle = window.setTimeout(function () {
+        this.timeoutHandle = window.setTimeout(() => {
 
             var roi = null,
                 text = '';

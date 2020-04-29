@@ -12,7 +12,7 @@ pnw.MemoryCache = function () {
     this.hash = new Hashtable();
 };
 
-pnw.MemoryCache.prototype.init = function () {
+pnw.MemoryCache.prototype.init = () => {
     "use strict";
     var dfd = Q.defer();
     dfd.resolve();

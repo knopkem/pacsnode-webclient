@@ -40,7 +40,7 @@ pnw.ToolContainer.prototype.isHandlingEvent = function () {
     return this.hitSuccess;
 };
 
-pnw.ToolContainer.prototype.onDragStart = function (event, offset, zoom) {
+pnw.ToolContainer.prototype.onDragStart = (event, offset, zoom) => {
     "use strict";
 };
 
@@ -102,7 +102,7 @@ pnw.ToolContainer.prototype.drawTrashIcon = function (context) {
     context.drawImage(this.trashImage, this.trashCenter.x - this.trashRadius, this.trashCenter.y - this.trashRadius, 2 * this.trashRadius, 2 * this.trashRadius);
 };
 
-pnw.ToolContainer.prototype.centerPoint = function (imageWidth, imageHeight) {
+pnw.ToolContainer.prototype.centerPoint = (imageWidth, imageHeight) => {
     "use strict";
     return new pnw.Point2D(imageWidth / 2, imageHeight / 2);
 };

@@ -4,7 +4,7 @@ var pnw = pnw || {}; // global namespace
 
 pnw.MathHelper = pnw.MathHelper || {}; // global namespace
 
-pnw.MathHelper.lineDistance = function (point1, point2) {
+pnw.MathHelper.lineDistance = (point1, point2) => {
     "use strict";
     var xs = 0,
         ys = 0;
@@ -18,7 +18,7 @@ pnw.MathHelper.lineDistance = function (point1, point2) {
     return Math.sqrt(xs + ys);
 };
 
-pnw.MathHelper.world2Image = function (pt, offset, zoom) {
+pnw.MathHelper.world2Image = (pt, offset, zoom) => {
     "use strict";
 
     if (pt === undefined || offset === undefined || zoom === undefined) {
@@ -34,7 +34,7 @@ pnw.MathHelper.world2Image = function (pt, offset, zoom) {
     return result;
 };
 
-pnw.MathHelper.image2World = function (pt, offset, zoom) {
+pnw.MathHelper.image2World = (pt, offset, zoom) => {
     "use strict";
 
     if (pt === undefined || offset === undefined || zoom === undefined) {
@@ -50,7 +50,7 @@ pnw.MathHelper.image2World = function (pt, offset, zoom) {
     return result;
 };
 
-pnw.MathHelper.world2Offset = function (worldPt, offset, zoom, newZoom) {
+pnw.MathHelper.world2Offset = (worldPt, offset, zoom, newZoom) => {
     'use strict';
 
     var result = new pnw.Point2D(),
@@ -73,27 +73,27 @@ pnw.MathHelper.world2Offset = function (worldPt, offset, zoom, newZoom) {
  * @returns A number in the range [min, max]
  * @type Number
  */
-pnw.MathHelper.clamp = function (value, min, max) {
+pnw.MathHelper.clamp = (value, min, max) => {
     "use strict";
     return Math.min(Math.max(value, min), max);
 };
 
-pnw.MathHelper.dotProduct = function (pt1, pt2) {
+pnw.MathHelper.dotProduct = (pt1, pt2) => {
     "use strict";
     return pt1.x * pt2.x + pt1.y * pt2.y;
 };
 
-pnw.MathHelper.crossProduct = function (pt1, pt2) {
+pnw.MathHelper.crossProduct = (pt1, pt2) => {
     "use strict";
     return pt1.x * pt2.y - pt1.y * pt2.x;
 };
 
-pnw.MathHelper.magnitude = function (pt1, pt2) {
+pnw.MathHelper.magnitude = (pt1, pt2) => {
     "use strict";
     return Math.sqrt(pnw.MathHelper.dotProduct(pt1, pt2));
 };
 
-pnw.MathHelper.angleBetweenPoints = function (pt1, pt2, center) {
+pnw.MathHelper.angleBetweenPoints = (pt1, pt2, center) => {
     "use strict";
     var a = new pnw.Point2D(),
         b = new pnw.Point2D();
@@ -107,25 +107,25 @@ pnw.MathHelper.angleBetweenPoints = function (pt1, pt2, center) {
     return Math.abs(pnw.MathHelper.angle(a, b));
 };
 
-pnw.MathHelper.angle = function (pt1, pt2) {
+pnw.MathHelper.angle = (pt1, pt2) => {
     "use strict";
     var cross = pnw.MathHelper.crossProduct(pt1, pt2),
         dot = pnw.MathHelper.dotProduct(pt1, pt2);
     return Math.atan2(cross, dot) * 180 / Math.PI;
 };
 
-pnw.MathHelper.roundTo = function (value, places) {
+pnw.MathHelper.roundTo = (value, places) => {
     'use strict';
     var multiplier = Math.pow(10, places);
 
     return (Math.round(value * multiplier) / multiplier);
 };
 
-pnw.MathHelper.computeRoi = function (hitObj, dicomObject) {
+pnw.MathHelper.computeRoi = (hitObj, dicomObject) => {
     'use strict';
 
     function average(data) {
-        var sum = data.reduce(function (sum, value) {
+        var sum = data.reduce((sum, value) => {
             return sum + value;
         }, 0);
 
@@ -133,7 +133,7 @@ pnw.MathHelper.computeRoi = function (hitObj, dicomObject) {
     }
 
     function standardDeviation(values, avg) {
-        var squareDiffs = values.map(function (value) {
+        var squareDiffs = values.map(value => {
             var diff = value - avg,
                 sqrDiff = diff * diff;
             return sqrDiff;

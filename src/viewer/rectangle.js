@@ -2,11 +2,11 @@ var pnw = pnw || {}; // global namespace
 
 /*global log*/
 
-pnw.Rectangle = function () {
+pnw.Rectangle = () => {
     "use strict";
 };
 
-pnw.Rectangle.prototype.draw = function (context, pt1, pt2, offset, zoom) {
+pnw.Rectangle.prototype.draw = (context, pt1, pt2, offset, zoom) => {
     "use strict";
 
     var w1 = pnw.MathHelper.image2World(pt1, offset, zoom),
@@ -24,7 +24,7 @@ pnw.Rectangle.prototype.draw = function (context, pt1, pt2, offset, zoom) {
     context.closePath();
 };
 
-pnw.Rectangle.prototype.createHitObj = function (pt1, pt2) {
+pnw.Rectangle.prototype.createHitObj = (pt1, pt2) => {
     'use strict';
     var hitObj = {
         Xmin: pt1.x,
@@ -56,7 +56,7 @@ pnw.Rectangle.prototype.computeRoi = function (dicomObject, pt1, pt2) {
     return pnw.MathHelper.computeRoi(hitObj, dicomObject);
 };
 
-pnw.Rectangle.prototype.isBodyHit = function (hitPt, offset, zoom, handle1, handle2) {
+pnw.Rectangle.prototype.isBodyHit = (hitPt, offset, zoom, handle1, handle2) => {
     'use strict';
     var p1 = new pnw.Point2D(handle1.imagePt.x, handle1.imagePt.y),
         p2 = new pnw.Point2D(handle2.imagePt.x, handle1.imagePt.y),

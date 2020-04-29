@@ -39,7 +39,7 @@ pnw.Slider.prototype.setSliderPosition = function (min, max, position) {
 
     // hiding slider after 1 sec
     window.clearTimeout(this.sliderTimeout);
-    this.sliderTimeout = window.setTimeout(function () {
+    this.sliderTimeout = window.setTimeout(() => {
         that.clear();
         that.sliderVisible = false;
     }, 1000);
@@ -94,7 +94,7 @@ pnw.Slider.prototype.drawKnob = function (left, top, width, height) {
     this.roundRect(this.context, left, top, width, height, 10, true, true);
 };
 
-pnw.Slider.prototype.roundRect = function (ctx, x, y, width, height, radius, fill, stroke) {
+pnw.Slider.prototype.roundRect = (ctx, x, y, width, height, radius, fill, stroke) => {
     "use strict";
     if (typeof stroke === "undefined") {
         stroke = true;

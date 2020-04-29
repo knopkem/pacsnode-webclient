@@ -22,9 +22,9 @@ pnw.Preloader = function (cacheMgr, cb) {
     this.timeArr = [];
 };
 
-pnw.Preloader.prototype.median = function (values) {
+pnw.Preloader.prototype.median = values => {
     "use strict";
-    values.sort(function (a, b) {
+    values.sort((a, b) => {
         return a - b;
     });
 
@@ -36,7 +36,7 @@ pnw.Preloader.prototype.median = function (values) {
         return (values[half - 1] + values[half]) / 2.0;
 };
 
-pnw.Preloader.prototype.mean = function (values) {
+pnw.Preloader.prototype.mean = values => {
     "use strict";
     var sum = 0,
         i = 0;
@@ -153,14 +153,14 @@ pnw.Preloader.prototype.nextSlice = function () {
     startTime = new Date().getTime();
 
     // check if the data is already stored
-    this.cacheMgr.contains(nextSliceUid).then(function () {
+    this.cacheMgr.contains(nextSliceUid).then(() => {
         sliceDone(null);
-    }, function () {
+    }, () => {
 
         log.debug('loading next slice', nextSliceUid);
         prom = that.loader.load(that.baseURL + nextSliceUid, 10, 100);
 
-        prom.then(sliceDone, function () {
+        prom.then(sliceDone, () => {
             log.error('failed loading data for', that.baseURL + nextSliceUid);
             that.nextSlice();
         });
@@ -187,9 +187,9 @@ pnw.Preloader.prototype.nextSlice = function () {
         if (patientData) {
             // store in cache
             try {
-                that.cacheMgr.add(nextSliceUid, patientData).then(function () {
+                that.cacheMgr.add(nextSliceUid, patientData).then(() => {
                     log.debug('data saved');
-                }, function () {
+                }, () => {
                     log.error('failed to add data');
                     that.running = false;
                 });
